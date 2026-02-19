@@ -221,7 +221,7 @@ export default function DashboardPage() {
                       </div>
                       {agent.last_burn_at && (
                         <div className="flex items-center gap-2">
-                          <span className="font-mono text-xs text-muted/30">Last burn {timeAgo ? `${Math.floor((Date.now() - new Date(agent.last_burn_at).getTime()) / 3600000)}h ago` : ''}</span>
+                          <span className="font-mono text-xs text-muted/30">Last burn {timeAgo(agent.last_burn_at)}</span>
                           {agent.last_tx_hash && (
                             <a href={`https://basescan.org/tx/${agent.last_tx_hash}`} target="_blank" rel="noopener noreferrer"
                               className="flex items-center gap-1 font-mono text-xs text-muted/30 hover:text-orange transition-colors">
