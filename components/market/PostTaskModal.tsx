@@ -33,7 +33,7 @@ function addHours(h: number) {
 }
 function short(addr: string) { return `${addr.slice(0, 6)}…${addr.slice(-4)}`; }
 function toWei(amount: number): bigint {
-  try { return parseUnits(String(amount), STACK_TOKEN_DECIMALS); } catch { return 0n; }
+  try { return parseUnits(String(amount), STACK_TOKEN_DECIMALS); } catch { return BigInt(0); }
 }
 function fromWei(raw: bigint): number {
   return parseFloat(formatUnits(raw, STACK_TOKEN_DECIMALS));
