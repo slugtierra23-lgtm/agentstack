@@ -14,24 +14,3 @@ export function createServerClient() {
     { auth: { persistSession: false } }
   );
 }
-```
-
-El cambio: se eliminó `import type { Database }` y se quitó `<Database>` de los dos `createClient`. El tipo `Database` no existe en tu `types/database.ts`.
-
----
-
-## Fix 2: `agentstack/app/dashboard/page.tsx`
-
-GitHub → `agentstack/app/dashboard/page.tsx` → lápiz → **Ctrl+F** busca:
-```
-timeAgo ? `${Math.floor((Date.now() - new Date(agent.last_burn_at).getTime()) / 3600000)}h ago` : ''
-```
-
-Reemplaza con:
-```
-timeAgo(agent.last_burn_at)
-```
-
-La línea completa queda:
-```
-<span className="font-mono text-xs text-muted/30">Last burn {timeAgo(agent.last_burn_at)}</span>
