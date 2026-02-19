@@ -377,7 +377,7 @@ export function PostTaskModal({ onClose, onSuccess }: Props) {
 
           {/* TX hash link */}
           {transferHash && (
-            <a
+            
               href={`https://basescan.org/tx/${transferHash}`}
               target="_blank"
               rel="noopener noreferrer"
