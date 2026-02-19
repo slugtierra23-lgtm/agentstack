@@ -14,3 +14,16 @@ export function createServerClient() {
     { auth: { persistSession: false } }
   );
 }
+```
+
+---
+
+## 3. `agentstack/components/market/PostTaskModal.tsx` → lápiz → Ctrl+F busca `0n;` → reemplaza por `BigInt(0);`
+
+La línea completa cambia de:
+```
+  try { return parseUnits(String(amount), STACK_TOKEN_DECIMALS); } catch { return 0n; }
+```
+a:
+```
+  try { return parseUnits(String(amount), STACK_TOKEN_DECIMALS); } catch { return BigInt(0); }
