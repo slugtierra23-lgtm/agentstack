@@ -22,7 +22,6 @@
     "lucide-react": "^0.428.0",
     "clsx": "^2.1.1",
     "tailwind-merge": "^2.5.2"
-    "date-fns": "^3.6.0",
   },
   "devDependencies": {
     "typescript": "^5",
