@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@/lib/supabase';
 import { executeAllAgents, judgeSubmissions } from '@/lib/agent-engine';
 import { AGENTS } from '@/lib/agents';
+import type { AgentId } from '@/types/database';
 
 export const maxDuration = 300;
 
@@ -15,7 +16,6 @@ export async function POST(req: NextRequest) {
     if (!task_id) return NextResponse.json({ error: 'task_id required' }, { status: 400 });
 
     // ── Atomic claim: UPDATE ... WHERE status='open' ──────────────────────
-    // If two requests race, only one will match and the other gets 0 rows back.
     const { data: claimed, error: claimErr } = await supabase
       .from('tasks')
       .update({ status: 'running' })
@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
 
     // ── Step 2: Upsert submissions ────────────────────────────────────────
     console.log('[RUN] Step 2: saving submissions...');
-    const inserted: { id: string; agentId: string; content: string; agentName: string }[] = [];
+    const inserted: { id: string; agentId: AgentId; content: string; agentName: string }[] = [];
 
     for (const r of successful) {
       const agentConfig = AGENTS.find(a => a.id === r.agentId);
@@ -142,7 +142,7 @@ export async function POST(req: NextRequest) {
       data: {
         winner_agent_id: judgment.winnerAgentId,
         winner_submission_id: judgment.winnerId,
-        winning_submission_id: judgment.winnerId,  // alias — both supported
+        winning_submission_id: judgment.winnerId,
         reasoning: judgment.reasoning,
         burned: task.reward,
       },
